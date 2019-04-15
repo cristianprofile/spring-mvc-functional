@@ -26,15 +26,6 @@ public class SpringMvcFunctionalApplicationTests {
     @LocalServerPort
     private int port;
 
-    //TODO CREATE TESTING LAYER
-    @Test
-    public void getAllTransaction() {
-
-        Transaction[] transaction = restTemplate.getForObject("http://localhost:" + this.port + "/transaction",
-                Transaction[].class);
-        assertThat(transaction).hasSize(2);
-    }
-
 
     @Test
     public void getTransactionOk() {
@@ -48,15 +39,14 @@ public class SpringMvcFunctionalApplicationTests {
 
 
     @Test
-    public void getTransactionKo() {
+    public void getTransactionNoContent() {
 
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange("http://localhost:" + this.port +
                         "/transaction/1232323", HttpMethod.GET, requestEntity, String.class);
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NO_CONTENT);
-
+        assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NO_CONTENT);;
     }
 
 

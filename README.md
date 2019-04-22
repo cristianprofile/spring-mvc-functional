@@ -24,16 +24,17 @@ Router configuration:
                 .GET(root + "/transaction", transactionHandler::handleGetAllTransaction)
                 .GET(root + "/transaction/{id}", transactionHandler::handleGetTransactionById).
                         POST(root + "/transaction", transactionHandler::handlePostTransaction).
-     //Defined Exception handler behaviour code:
 
-                        onError(IllegalArgumentException.class, this::catchNullPointerException).
-                        onError(NullPointerException.class, this::catchIllegalArgumentException).
-
-                        filter(this::filterHandler)
+                //Defined Exception handler behaviour code:
+                onError(IllegalArgumentException.class, this::catchNullPointerException).
+                onError(NullPointerException.class, this::catchIllegalArgumentException).
+                // Define filter
+                filter(this::filterHandler)
+                
                 .build();
     }
 
-Code catching exceptions:
+Code Filtering request:
 
     private ServerResponse filterHandler(ServerRequest serverRequest, HandlerFunction<ServerResponse> handlerFunction) throws Exception {
         try {
